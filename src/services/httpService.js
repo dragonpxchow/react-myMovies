@@ -5,6 +5,7 @@ import logger from "./logService";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 //axios.defaults.headers.common["x-auth-token"] = auth.getJwt();
+axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 //axios.interceptors.response.use(success, error);  // log success response
 axios.interceptors.response.use(null, (error) => {
