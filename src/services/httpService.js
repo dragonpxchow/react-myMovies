@@ -24,7 +24,7 @@ axios.interceptors.response.use(null, (error) => {
 
   if (!expectedError) {
     // Unexpected - (network down, server down, db down, bug)
-    //console.log("Logging the error", error);
+    console.log("Logging the error", error);
     //alert("An unexpected error occured");
     logger(error);
     //toast.error("An unexpected error occured"); // use as object
