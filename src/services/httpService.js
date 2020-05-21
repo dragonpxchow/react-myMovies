@@ -7,7 +7,7 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 //axios.defaults.headers.common["x-auth-token"] = auth.getJwt();
 axios.defaults.headers.common["Access-Control-Allow-Origin"] =
-  "https://intense-lowlands-44905.herokuapp.com";
+  "https://gentle-beach-57815.herokuapp.com";
 axios.defaults.headers.common["Access-Control-Allow-Methods"] =
   "GET, POST, PUT, DELETE,OPTIONS";
 
