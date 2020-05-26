@@ -5,14 +5,11 @@ import logger from "./logService";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
-/*
 //axios.defaults.headers.common["x-auth-token"] = auth.getJwt();
-axios.defaults.headers.common["Access-Control-Allow-Origin"] =
-  "https://gentle-beach-57815.herokuapp.com";
-axios.defaults.headers.common["Access-Control-Allow-Methods"] =
-  "GET, POST, PUT, DELETE,OPTIONS";
-*/
-
+axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*"; //"https://gentle-beach-57815.herokuapp.com";
+//axios.defaults.headers.common["Access-Control-Allow-Methods"] ="GET, POST, PUT, DELETE,OPTIONS";
+axios.defaults.headers.common["Access-Control-Allow-Headers"] =
+  "Origin, X-Requested-With, Content-Type, Accept";
 //axios.interceptors.response.use(success, error);  // log success response
 axios.interceptors.response.use(null, (error) => {
   // handle unexpected error globally
