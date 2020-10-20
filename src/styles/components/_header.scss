@@ -1,0 +1,18 @@
+.header {
+    background: $dark-blue;
+}
+
+.header__content {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;  // distributes space between title and button
+    padding: $s-size 0; // padding on top and bottom
+}
+
+.header__title {
+    color: white;
+    text-decoration: none;  // clears default text decoration
+    h1 {  // nested selector
+        margin: 0;  // title does not need margin
+    }
+}

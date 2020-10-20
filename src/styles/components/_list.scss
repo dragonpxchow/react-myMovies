@@ -1,0 +1,62 @@
+.list-header {
+    background: $off-white;
+    border: 1px solid darkent($off-white, 7%); // darken by 7%
+    color: $grey;
+    display: flex; // have one val on left and another on the right
+    justify-content: space-between;  //leftover space split between items
+    padding: $s-size $m-size;  // left and right get m-size
+}
+
+.list-body {  // sets space between end of list and bottom of browser
+    margin-bottom: $m-size;
+    @media (min-width: $desktop-breakpoint) {
+        margin-bottom: $l-size;
+    }
+}
+
+.list-item {
+    border: 1px solid darken($off-white, 7%);
+    border-top: none; // we don't want a dup border
+    color: $dark-grey;
+    display: flex;
+    flex-direction: column;  // top to bottom
+    padding: $s-size;
+    text-decoration: none; // remove underline
+    transition: background .3s ease;  // transition background color, fade in to off-white
+    &:hover {  // equivalent to .list-item:hover {}
+        background: $off-white;
+    }
+    @media (min-width: $desktop-breakpoint) {  // desktop
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: $m-size;
+    }
+}
+
+.list-item--message {
+    align-items: center;  
+    color: $grey;
+    justify-content: center; // justify in both directions
+    padding: $m-size;
+    &.hover {
+        background: none;
+    }
+}
+
+.list-item__title {
+    margin: 0;
+    word-break: break-all;  // break up super-long words
+}
+.list-item_sub-title {
+    color: $grey;
+    font-size: $font-size-small;
+}
+
+.list-item_data {
+   margin: $s-size 0 0 0; // set top margin for mobile
+   @media(min-width: $desktop-breakpoint){ // for desktop
+       margin : 0;  // reset margin
+       padding-left: $s-size;
+   }
+}

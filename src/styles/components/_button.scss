@@ -1,0 +1,20 @@
+.button {
+    background: $blue;
+    border: none;
+    color: white;
+    display: inline-block; // ensure vertical margin and padding are taken into effect
+    line-height: 1;
+    font-size: $font-size-large;
+    font-weight: 300;
+    padding: $s-size;
+    text-decoration: none;  //remove underline from button, makes it look like button
+
+}
+
+.button--link{
+    background: none;
+}
+
+.button--secondary {
+    background: #888;
+}

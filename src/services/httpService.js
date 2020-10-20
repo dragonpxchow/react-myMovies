@@ -34,6 +34,7 @@ export function setJwt(jwt) {
   axios.defaults.headers.common["x-auth-token"] = jwt;
 }
 
+// export as object
 export default {
   get: axios.get, // get data
   post: axios.post, // create data

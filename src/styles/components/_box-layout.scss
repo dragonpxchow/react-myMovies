@@ -1,0 +1,23 @@
+.box-layout {
+    align-items: center;
+    background: url('/images/bg.jpg');
+    background-size: cover;
+    display: flex;
+    height: 100vh;  // % of viewport height
+    justify-content: center;
+    width: 100vw;  // % of viewport width
+  }
+  
+  .box-layout__box {
+    background: fade-out(white, .15);
+    border-radius: 3px;  // add softness to borders
+    padding: $l-size $m-size;  // padding in the box. Constant from file created earlier
+    text-align: center;
+    width: 25rem;
+  }
+  
+  .box-layout__title {
+    margin: 0 0 $m-size 0; // 0 on all sides ecept bottom
+    line-height: 1; // all text has a line height.  Space above and beyond is distributed evenly
+  }
+  
