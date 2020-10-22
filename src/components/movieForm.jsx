@@ -1,6 +1,8 @@
 import React from "react";
 import Form from "./common/form";
-import Joi from "joi-browser";
+//import Joi from "joi-browser";
+import Joi from "joi-full";
+
 //import { saveMovie, getMovie } from "../services/fakeMovieService";
 import { saveMovie, getMovie } from "../services/movieService";
 //import { getGenres } from "../services/fakeGenreService";
@@ -41,8 +43,8 @@ class MovieForm extends Form {
       .min(0)
       .max(10)
       .label("Daily Rental Rate"),
-    stockedOn: Joi.date().required().label("Stocked On"),
-    releasedOn: Joi.date().required().label("Released On"),
+    stockedOn: Joi.date().format("MM/DD/YYYY").required().label("Stocked On"),
+    releasedOn: Joi.date().format("MM/DD/YYYY").required().label("Released On"),
   };
 
   async populateGenres() {
@@ -77,6 +79,8 @@ class MovieForm extends Form {
       genreId: movie.genre._id,
       numberInStock: movie.numberInStock,
       dailyRentalRate: movie.dailyRentalRate,
+      stockedOn: moment(movie.stockedOn),
+      releasedOn: moment(movie.releasedOn),
     };
   }
 
@@ -93,25 +97,50 @@ class MovieForm extends Form {
         <h1>Movie Form</h1>
         <form onSubmit={this.handleSubmit} readOnly={this.state.readOnly}>
           <div className="row">
-            <div className="col-md-8">{this.renderInput("title", "Title")}</div>
-          </div>
-          <div className="row">
-            <div className="col-md-4">
-              {this.renderSelect("genreId", "Genre", this.state.genres)}
-            </div>
-            <div className="col-md-4">
-              {this.renderInput("numberInStock", "Number in Stock", "number")}
-            </div>
-            <div className="col-md-4">
-              {this.renderInput("dailyRentalRate", "Rate")}
+            <div className="col-md-8">
+              {this.renderInput("title", "Title", "Movie title")}
             </div>
           </div>
           <div className="row">
             <div className="col-md-4">
-              {this.renderSingleDatePicker("stockedOn", "Stocked On")}
+              {this.renderSelect(
+                "genreId",
+                "Genre",
+                "Select a genre",
+                this.state.genres
+              )}
             </div>
             <div className="col-md-4">
-              {this.renderSingleDatePicker("releasedOn", "Released On")}
+              {this.renderInput(
+                "numberInStock",
+                "Number in Stock",
+                "Available in stock",
+                "number"
+              )}
+            </div>
+            <div className="col-md-4">
+              {this.renderInput(
+                "dailyRentalRate",
+                "Rate",
+                "Rating of favorite"
+              )}
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-4">
+              {this.renderSingleDatePicker(
+                "stockedOn",
+                "Stocked On",
+                "Stocked Date"
+              )}
+            </div>
+            <div className="col-md-4">
+              {this.renderSingleDatePicker(
+                "releasedOn",
+                "Released On",
+                "Released Date"
+              )}
             </div>
           </div>
 

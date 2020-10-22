@@ -14,15 +14,21 @@ class Form extends Component {
   validate = () => {
     // object restructing result.error
     const options = { abortEarly: false };
+    //console.log("stockedOn form validation >>>>>", this.state.data.stockedOn);
     const { error } = Joi.validate(this.state.data, this.schema, options);
     //console.log("Form Error(s): ", error); // validation error when editing, why !!
     if (!error) return;
-
+    //console.log("I got errror >>>>>>", error);
     const errors = {};
     for (let item of error.details) {
       errors[item.path[0]] = item.message;
+      /*
+      console.log(
+        item.path[0] + "<<<<<<< form found error <<<<<<<<<<",
+        item.message
+      );
+      */
     }
-
     return errors;
     /*
         const errors = {};
@@ -96,9 +102,8 @@ class Form extends Component {
 
   validateSingleDate = (name, value) => {
     // name:  fieldName of date
-    // value: date objec tof moment, must be a number of milliseconds or valid date string
-    //.log("validateSingleDate", value);
-    const obj = { [name]: value.format() };
+    // value: date object of moment, must be a number of milliseconds or valid date string
+    const obj = { [name]: value.format("MM/DD/YYYY") };
     const schema = { [name]: this.schema[name] };
     // object restructing result.error
     const { error } = Joi.validate(obj, schema);
@@ -114,7 +119,6 @@ class Form extends Component {
     if (errorMessage) {
       errors[fieldName] = errorMessage;
     } else {
-      //delete errors[input.name];
       delete errors[fieldName];
     }
 
@@ -122,6 +126,7 @@ class Form extends Component {
     if (objDate) {
       data[fieldName] = objDate; // use field name
       this.setState({ data, errors });
+      //this.setState({ company }, () => this.onValidCompanyInfo())
     }
   };
 
@@ -133,13 +138,14 @@ class Form extends Component {
     this.setState({ calendarFocused });
   };
 
-  renderSingleDatePicker(fieldName, fieldLabel) {
+  renderSingleDatePicker(fieldName, fieldLabel, placeHolder) {
     // single date picker
     const { data, calendarFocused, errors, readOnly } = this.state;
     //console.log ("field (" + fieldName + ")   >>> has date >>>" + moment(data[fieldName]).format("DD/MM/YYYY") )
 
     return (
       <OneDatePicker
+        placeholder={placeHolder}
         name={fieldName}
         label={fieldLabel}
         date={data[fieldName]}
@@ -155,11 +161,12 @@ class Form extends Component {
     );
   }
 
-  renderInput(fieldName, fieldLabel, fieldType = "text") {
+  renderInput(fieldName, fieldLabel, placeHolder, fieldType = "text") {
     // input field
     const { data, errors, readOnly } = this.state;
     return (
       <Input
+        placeholder={placeHolder}
         type={fieldType}
         name={fieldName}
         value={data[fieldName]}
@@ -171,11 +178,12 @@ class Form extends Component {
     );
   }
 
-  renderSelect(fieldName, fieldLabel, options) {
+  renderSelect(fieldName, fieldLabel, placeHolder, options) {
     // select field
     const { data, errors, readOnly } = this.state;
     return (
       <Select
+        placeholder={placeHolder}
         name={fieldName}
         value={data[fieldName]}
         label={fieldLabel}
@@ -194,12 +202,6 @@ class Form extends Component {
       </button>
     );
   }
-
-  /* no render any thing here
-    render() { 
-        return (  );
-    }
-    */
 }
 
 export default Form;
