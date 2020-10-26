@@ -14,54 +14,15 @@ class Form extends Component {
   validate = () => {
     // object restructing result.error
     const options = { abortEarly: false };
-    //console.log("stockedOn form validation >>>>>", this.state.data.stockedOn);
+
     const { error } = Joi.validate(this.state.data, this.schema, options);
-    //console.log("Form Error(s): ", error); // validation error when editing, why !!
     if (!error) return;
-    //console.log("I got errror >>>>>>", error);
+    //console.log("Form Error(s): ", error);
     const errors = {};
     for (let item of error.details) {
       errors[item.path[0]] = item.message;
-      /*
-      console.log(
-        item.path[0] + "<<<<<<< form found error <<<<<<<<<<",
-        item.message
-      );
-      */
     }
     return errors;
-    /*
-        const errors = {};
-        const { data } = this.state;
-        if (data.username.trim() === "")
-          errors.username = "Username is required";
-        if (data.password.trim() === "")
-          errors.password = "Password is required";
-        return Object.keys(errors).length === 0 ? null : errors;
-        */
-  };
-
-  validateProperty = ({ name, value }) => {
-    // name , value is object restructing of e.curretnTarget
-    // field validation
-    const obj = { [name]: value };
-    const schema = { [name]: this.schema[name] };
-    // object restructing result.error
-    const { error } = Joi.validate(obj, schema);
-    //if (!error) return null;
-    //return error.details[0].message;
-    return error ? error.details[0].message : null;
-    /*
-        if (name === "username") {
-          if (value.trim() === "") return "Username is required";
-          // ...
-        }
-    
-        if (name === "password") {
-          if (value.trim() === "") return "Password is required";
-          // ...
-        }
-        */
   };
 
   handleSubmit = (e) => {
@@ -84,19 +45,31 @@ class Form extends Component {
     //this.setState((prevState) => ({ readOnly: !prevState.readOnly }));
   };
 
-  handleChange = ({ currentTarget: input }) => {
+  validateProperty = ({ name, value }) => {
+    // name , value is object restructing of e.curretnTarget
+    // field validation
+    const obj = { [name]: value };
+    const schema = { [name]: this.schema[name] };
+    // object restructing result.error
+    const { error } = Joi.validate(obj, schema);
+    //if (!error) return null;
+    //return error.details[0].message;
+    return error || "" ? error.details[0].message : null;
+  };
+
+  onInputChange = ({ currentTarget: input }) => {
+    // input is e.currentTarget
+    // eg.  input.name === username
     const errors = { ...this.state.errros };
     const errorMessage = this.validateProperty(input);
     if (errorMessage) {
       errors[input.name] = errorMessage;
-      // eg.  input.name === username
     } else {
       delete errors[input.name];
     }
 
     const data = { ...this.state.data };
-    //data[e.currentTarget.name] = e.currentTarget.value; // use field name
-    data[input.name] = input.value; // use field name
+    data[input.name] = input.value;
     this.setState({ data, errors });
   };
 
@@ -171,7 +144,7 @@ class Form extends Component {
         name={fieldName}
         value={data[fieldName]}
         label={fieldLabel}
-        onChange={this.handleChange}
+        onChange={this.onInputChange}
         readOnly={readOnly}
         error={errors[fieldName]}
       ></Input>
@@ -188,7 +161,7 @@ class Form extends Component {
         value={data[fieldName]}
         label={fieldLabel}
         options={options}
-        onChange={this.handleChange}
+        onChange={this.onInputChange}
         readOnly={readOnly}
         error={errors[fieldName]}
       ></Select>

@@ -28,10 +28,12 @@ class MovieForm extends Form {
     },
   };
 
+  // use .empty() or allow["", null] to allow empty string
   schema = {
     _id: Joi.string(),
-    country: Joi.string().label("Country"),
-    title: Joi.string().required().label("Title"),
+    //title: Joi.string().required().label("Title"),
+    title: Joi.string().required().min(1).max(50).label("Title"),
+    // .error(new Error("Was REALLY expecting a string")),
     genreId: Joi.string().required().label("Genre"),
     numberInStock: Joi.number()
       .required()
@@ -70,6 +72,25 @@ class MovieForm extends Form {
     await this.populateMovie();
     // here to set form mode
     this.setState({ readOnly: false });
+    /*
+    const schema = Joi.object({
+      foo: Joi.number()
+        .min(0)
+        .error((errors) => {
+          return new Error(
+            "found errors with " +
+              errors
+                .map(
+                  (err) =>
+                    `${err.local.key}(${err.local.limit}) with value ${err.local.value}`
+                )
+                .join(" and ")
+          );
+        }),
+    });
+    const err = schema.validate({ foo: -2 }); // returns new Error('found errors with foo(0) with value -2')
+    console.log(">>>>>>>>>>>>>>", err);
+    */
   }
 
   mapToViewModel(movie) {
@@ -184,7 +205,7 @@ class MovieForm extends Form {
           />
           */}
           {this.renderButton("Save")}
-          <button onClick={this.handleFormMode}>Toggle</button>
+          {/*<button onClick={this.handleFormMode}>Toggle</button>*/}
         </form>
       </div>
     );
